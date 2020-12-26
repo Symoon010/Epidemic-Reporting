@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "78564725436",
+    "firebase_url": "https://epidemic-reporting.firebaseio.com",
+    "project_id": "epidemic-reporting",
+    "storage_bucket": "epidemic-reporting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78564725436:android:10812087d8cd5f9ba176b9",
+        "android_client_info": {
+          "package_name": "com.example.epidemicreporting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78564725436-r8ft8499r7uqdu2v4lvdkhessninja92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2ec8zN-NfnFwI6hjo-sDQm1crf3WET84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78564725436-r8ft8499r7uqdu2v4lvdkhessninja92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
