@@ -41,7 +41,7 @@ public class Sign_in extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-        getSupportActionBar().hide();
+       getSupportActionBar().hide();
         if (Build.VERSION.SDK_INT >= 21) {
             window = this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.status_bar));
@@ -142,39 +142,8 @@ public class Sign_in extends AppCompatActivity {
       forgetpassword.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              final EditText resetmail=new EditText(v.getContext());
-              AlertDialog.Builder passwordresetDialog=new AlertDialog.Builder(v.getContext());
-              passwordresetDialog.setTitle("Reset Password ?");
-              passwordresetDialog.setTitle("Enter Your Email To Received Reset Link . ");
-              passwordresetDialog.setView(resetmail);
-
-              passwordresetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                     String mail=resetmail.getText().toString();
-                     mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                         @Override
-                         public void onSuccess(Void aVoid) {
-                             Toast.makeText(Sign_in.this,"Reset Link Sent To Your Email.", Toast.LENGTH_SHORT).show();
-                         }
-                     }).addOnFailureListener(new OnFailureListener() {
-                         @Override
-                         public void onFailure(@NonNull Exception e) {
-                           Toast.makeText(Sign_in.this,"Error ! Reset Link is Not Sent"+ e.getMessage(), Toast.LENGTH_SHORT).show();
-                         }
-                     });
-                  }
-              });
-
-
-              passwordresetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                      //close the dialog
-                  }
-              });
-              passwordresetDialog.create().show();
-
+              Intent intent= new Intent(Sign_in.this,Forget_password.class);
+              startActivity(intent);
 
           }
       });

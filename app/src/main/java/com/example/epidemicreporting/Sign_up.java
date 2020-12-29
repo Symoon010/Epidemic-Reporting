@@ -63,8 +63,8 @@ public class Sign_up extends AppCompatActivity {
             window=this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.status_bar));
         }
-        actionbar=getSupportActionBar();
-        actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1A851D")));
+       actionbar=getSupportActionBar();
+       actionbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1A851D")));
 
         name=findViewById(R.id.nameid);
         email=findViewById(R.id.emailid);

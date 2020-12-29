@@ -11,6 +11,7 @@
        android:background="@color/action_bar"
        android:id="@+id/toolbarid"
        app:title="Epidemic Reporting"
+       android:theme="@style/ThemeOverlay.AppCompat.Dark"
 
        />
 </LinearLayout>

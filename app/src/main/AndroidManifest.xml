@@ -9,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Disease"></activity>
+        <activity
+            android:name=".Forget_password"
+            android:parentActivityName=".Sign_in" />
         <activity
             android:name=".Demo"
-            android:parentActivityName=".Home"
-            />
-        <activity android:name=".Home"
-
-            />
+            android:parentActivityName=".Home" />
+        <activity android:name=".Home" />
         <activity
             android:name=".Sign_up"
-            android:parentActivityName=".Home"
-            />
+            android:parentActivityName=".Home" />
         <activity android:name=".Sign_in" />
         <activity android:name=".MainActivity">
             <intent-filter>

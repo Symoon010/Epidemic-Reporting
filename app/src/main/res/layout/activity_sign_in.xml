@@ -94,7 +94,7 @@
             android:layout_marginRight="24dp"
             android:background="@drawable/round_filled"
             android:text="Sign in"
-            android:textColor="#FFFF"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:textColorLink="#FAF8F8"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
