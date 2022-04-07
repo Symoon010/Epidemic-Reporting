@@ -4,17 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.service.autofill.SaveInfo;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -25,12 +30,21 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,19 +52,16 @@ import java.util.Map;
 public class Sign_up extends AppCompatActivity {
 
     private Window window;
-
+    DatabaseReference mref;
+    AutoCompleteTextView division,district,upazila;
     ActionBar actionbar;
-
-   Button signup;
-   EditText name,email,nid,password;
-
-    Spinner division,district,upazila;
-    String gender;
+    String name1,email1,nid1,division1,district1,upazila1,password1;
+    Button signup;
+    EditText name,email,nid,password;
+    String gender="";
     RadioButton male,female;
-
     String userID;
-
-     FirebaseFirestore fStore;
+    DatabaseReference reference;
     FirebaseAuth fAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,21 +81,58 @@ public class Sign_up extends AppCompatActivity {
         email=findViewById(R.id.emailid);
         nid=findViewById(R.id.nidid);
         password=findViewById(R.id.passwordid);
-        //gender=findViewById(R.id.radiogroupid);
-      //  male=findViewById(R.id.maleradiobuttonid);
-      //  female=findViewById(R.id.femaleradiobuttonid);
-        division=findViewById(R.id.divisionid);
-        district=findViewById(R.id.districtid);
-        upazila=findViewById(R.id.upazilaid);
-       signup=findViewById(R.id.signupid);
-       male=findViewById(R.id.maleradiobuttonid);
-       female=findViewById(R.id.femaleradiobuttonid);
+        division=(AutoCompleteTextView)findViewById(R.id.divisionid);
+        district=(AutoCompleteTextView)findViewById(R.id.districtid);
+        upazila=(AutoCompleteTextView)findViewById(R.id.upazilaid);
+        signup=findViewById(R.id.signupid);
+        male=findViewById(R.id.maleradiobuttonid);
+        female=findViewById(R.id.femaleradiobuttonid);
 
         fAuth=FirebaseAuth.getInstance();
-        fStore=FirebaseFirestore.getInstance();
+       String []AllDivision={"Dhaka","Rajshahi","Chittagong","Barishal","Sylhet","Rangpur","Khulna","Mymensingh"};
+
+       String []AllDistrict={"Barguna","Barisal","Bhola","Jhalokati","Patuakhali", "Pirojpur", "Bandarban","Brahmanbaria","Chandpur", "Chittagong", "Comilla","Cox's Bazar","Feni","Khagrachhari","Lakshmipur", "Noakhali", "Rangamati",
+        "Dhaka","Faridpur","Gazipur",  "Gopalganj",  "Kishoreganj","Madaripur",  "Manikganj","Munshiganj",  "Narayanganj","Narsingdi","Rajbari","Shariatpur","Tangail",
+        "Bagerhat", "Chuadanga","Jessore",  "Jhenaidah",  "Khulna",     "Kushtia",    "Magura",   "Meherpur",    "Narail",     "Satkhira",
+        "Jamalpur", "Mymensingh",  "Netrakona","Sherpur", "Bogra","Chapainawabganj","Joypurhat","Naogaon",    "Natore",     "Pabna",      "Rajshahi", "Sirajganj",
+        "Dinajpur", "Gaibandha","Kurigram", "Lalmonirhat","Nilphamari", "Panchagarh", "Rangpur",  "Thakurgaon",
+        "Habiganj", "Moulvibazar","Sunamganj","Sylhet"};
+
+        String []AllUpazila={"Patnitala","Porsha","Manda","Mohadevpur"};
 
 
+       ArrayAdapter<String>adapter=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,AllDivision);
+       division.setThreshold(1);
+       division.setAdapter(adapter);
 
+       ArrayAdapter<String>adapter1=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,AllDistrict);
+       district.setThreshold(1);
+       district.setAdapter(adapter1);
+
+       ArrayAdapter<String>adapter2=new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,AllUpazila);
+       upazila.setThreshold(1);
+       upazila.setAdapter(adapter2);
+
+
+/*
+        mref= FirebaseDatabase.getInstance().getReference("Demo");
+
+
+        ValueEventListener event =new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                divisionsearch(snapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+       mref.addListenerForSingleValueEvent(event);*/
+
+/*
        final String totaldivision[]={"Dhaka","Rajshahi","Chittagong","Khulna","Sylhet","Barisal","Rangpur","Mymensingh"};
        final String Dhaka[]={"Dhaka","Gazipur"};
        final String Rajshahi[]={"Rajshahi","Naogaon"};
@@ -167,26 +215,80 @@ public class Sign_up extends AppCompatActivity {
 
 
 
-
+*/
      /*    if(fAuth.getCurrentUser()!=null)
          {
              startActivity(new Intent(getApplicationContext(),Home.class));
              finish();
          }
+
+
+
+
 */
+
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final   String email1=email.getText().toString().trim();
-                final String name1=name.getText().toString().trim();
-                final  String nid1=nid.getText().toString().trim();
-                final String division1=division.getSelectedItem().toString();
-                final String district1=district.getSelectedItem().toString();
-                final String upazila1=upazila.getSelectedItem().toString();
-                //String male1= male.getText().toString();
-                // String female1= female.getText().toString();
-                String password1=password.getText().toString().trim();
 
+                email1=email.getText().toString().trim();
+                name1=name.getText().toString().trim();
+                nid1=nid.getText().toString().trim();
+                division1=division.getText().toString().trim();
+                district1=district.getText().toString().trim();
+                upazila1=upazila.getText().toString().trim();
+                password1=password.getText().toString().trim();
+
+
+                if(checkConnection()==true)
+                {
+                    Snackbar.make(v, "No Internet Connection", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(name1))
+                {
+                    Snackbar.make(v, "Name is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(email1))
+                {
+                    Snackbar.make(v, "Email is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(nid1))
+                {
+                    Snackbar.make(v, "Nid is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+
+                if(nid1.length()!=10)
+                {
+                    Snackbar.make(v, "Nid Must be 10 Digit", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(division1))
+                {
+                    Snackbar.make(v, "Division is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(district1))
+                {
+                    Snackbar.make(v, "District is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+                if(TextUtils.isEmpty(upazila1))
+                {
+                    Snackbar.make(v, "Upazila is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
+                if(!female.isChecked()&&!male.isChecked())
+                {
+                    Snackbar.make(v, "Gender is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
+                    return;
+                }
                 if(male.isChecked())
                 {
                     gender="Male";
@@ -195,48 +297,30 @@ public class Sign_up extends AppCompatActivity {
                 {
                     gender="Female";
                 }
-                if(TextUtils.isEmpty(email1))
-                {
-                    email.setError("Email is Required");
-                    return;
-                }
                 if(TextUtils.isEmpty(password1))
                 {
-                    password.setError("Password is Required");
+                    Snackbar.make(v, "Password is Required", Snackbar.LENGTH_LONG).setAction("", null).show();
                     return;
                 }
                 if(password1.length()<6)
                 {
-                    password.setError("Password must be >= 6 Character");
+                    Snackbar.make(v, "Password must be >= 6 Character", Snackbar.LENGTH_LONG);
                     return;
                 }
+
 
                 fAuth.createUserWithEmailAndPassword(email1,password1).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(Sign_up.this,"User Created",Toast.LENGTH_SHORT).show();
+                            FirebaseUser User=FirebaseAuth.getInstance().getCurrentUser();
+                            User.sendEmailVerification();
                             userID=fAuth.getUid();
-
-
-                            DocumentReference documentReference=fStore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("Name", name1);
-                            user.put("Email", email1);
-                            user.put("Nid",nid1);
-                            user.put("Division",division1);
-                            user.put("District",district1);
-                            user.put("Upazila",upazila1);
-                            user.put("Gender",gender);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("TAG", "onSuccess: user Profile is created for "+ userID);
-                                }
-                            });
-
-                            startActivity(new Intent(getApplicationContext(),Home.class));
+                            StoreData  info = new  StoreData(name1,email1,nid1,division1,district1,upazila1,gender);
+                            FirebaseDatabase.getInstance().getReference("Users").child(userID).setValue(info);
+                            Toast.makeText(Sign_up.this,"Check Your Email To Verify Your Account",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),Sign_in.class));
                         }
                         else
                         {
@@ -247,8 +331,17 @@ public class Sign_up extends AppCompatActivity {
             }
         });
 
+    }
 
+    public  boolean checkConnection(){
+        ConnectivityManager connectivityManager=(ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        if(networkInfo==null)
+        {
 
-
+            return true;
+        }
+        else
+            return false;
     }
 }

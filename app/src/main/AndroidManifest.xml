@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.epidemicreporting">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +13,69 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Disease"></activity>
+        <activity android:name=".Disease4_Death"
+            android:parentActivityName=".Disease4_Reporting"
+            />
+        <activity android:name=".Disease4_Recover"
+            android:parentActivityName=".Disease4_Reporting"
+            />
+        <activity android:name=".Disease4_Infected"
+            android:parentActivityName=".Disease4_Reporting"
+            />
+        <activity android:name=".Disease4_Reporting"
+            android:parentActivityName=".Home"
+            />
+        <activity
+            android:name=".Disease3_Death"
+            android:parentActivityName=".Disease3_Reporting" />
+        <activity
+            android:name=".Disease3_Recover"
+            android:parentActivityName=".Disease3_Reporting" />
+        <activity
+            android:name=".Disease3_Infected"
+            android:parentActivityName=".Disease3_Reporting" />
+        <activity
+            android:name=".Disease3_Reporting"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Disease2_Death"
+            android:parentActivityName=".Disease2_Reporting" />
+        <activity
+            android:name=".Disease2_Recover"
+            android:parentActivityName=".Disease2_Reporting" />
+        <activity
+            android:name=".Disease2_Infected"
+            android:parentActivityName=".Disease2_Reporting" />
+        <activity
+            android:name=".Disease2_Reporting"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Contact"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Instruction"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Disease1_Death"
+            android:parentActivityName=".Disease1_Reporting" />
+        <activity
+            android:name=".Disease1_Recover"
+            android:parentActivityName=".Disease1_Reporting" />
+        <activity
+            android:name=".Disease1_Reporting"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Disease1_Infected"
+            android:parentActivityName=".Disease1_Reporting" />
+        <activity
+            android:name=".Profile"
+            android:parentActivityName=".Home" />
         <activity
             android:name=".Forget_password"
             android:parentActivityName=".Sign_in" />
         <activity
-            android:name=".Demo"
-            android:parentActivityName=".Home" />
-        <activity android:name=".Home" />
+            android:name=".Home"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Sign_up"
             android:parentActivityName=".Home" />

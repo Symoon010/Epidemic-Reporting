@@ -4,22 +4,22 @@
 
 <group android:checkableBehavior="single">
     <item
-        android:id="@+id/Profileid"
+        android:id="@+id/profileid"
         android:title="Profile"
         android:icon="@drawable/profile"
         />
     <item
-        android:id="@+id/Instructionid"
+        android:id="@+id/instructionid"
         android:title="Instruction"
         android:icon="@drawable/guideid"
         />
     <item
-        android:id="@+id/Contactid"
+        android:id="@+id/contactid"
         android:title="Contact"
         android:icon="@drawable/mailid"
         />
      <item
-         android:id="@+id/logoutid"
+         android:id="@+id/outid"
          android:title="Logout"
          android:icon="@drawable/logout_icon"
          />

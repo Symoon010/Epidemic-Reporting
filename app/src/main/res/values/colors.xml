@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#24AA29</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#24AA29</color>
 
     <color name="status_bar">#24AA29</color>
     <color name="action_bar">#1A851D</color>
+    <color name="back_ground">#E0EAE1</color>
 
 </resources>

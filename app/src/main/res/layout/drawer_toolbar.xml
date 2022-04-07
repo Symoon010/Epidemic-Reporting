@@ -10,7 +10,7 @@
        android:layout_height="?attr/actionBarSize"
        android:background="@color/action_bar"
        android:id="@+id/toolbarid"
-       app:title="Epidemic Reporting"
+       app:title="EPIDEMIC REPORTING"
        android:theme="@style/ThemeOverlay.AppCompat.Dark"
 
        />
